@@ -4,6 +4,9 @@
 
 <div class="section rounded padded shadowed white" style="min-height:280px;width:70%;margin:25px auto">
 	<h4 class="header center-align padded">Update Personal Information</h4>
+  {% if error %}
+      <p class="light error-message rounded" style="font-size:16px;margin-bottom:30px">{{error}}</p>
+  {% endif %}
 	<div class="row">
         <form class="col s12" action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}

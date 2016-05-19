@@ -28,9 +28,15 @@
 	</div>
 	
 	{% if login %}
-	<div class="center" style="margin-bottom: 25px">
-		<a class="waves-effect waves-light btn btn-large grey darken-4 rounded modal-trigger" href="{% url 'apply_job' job_id %}">Apply Now !</a>
-	</div>
+		{% if apply %}
+		<div class="center" style="margin-bottom: 25px">
+			<a class="waves-effect waves-light btn btn-large grey darken-4 rounded" href="{% url 'apply_job' job_id %}">Apply Now !</a>
+		</div>
+		{% else %}
+		<div class="center" style="margin-bottom: 25px">
+			<a class="btn-large grey rounded">Already Applied</a>
+		</div>
+		{% endif %}
 	{% else %}
 	<div class="center" style="margin-bottom: 25px">
 		<a class="waves-effect waves-light btn btn-large grey darken-4 rounded modal-trigger" href="#modalsignup">Apply Now !</a>

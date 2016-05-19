@@ -32,14 +32,14 @@ class Candidate (models.Model):
     phone_number = models.CharField(max_length=15)
     current_designation = models.CharField(max_length=100)
     current_employer = models.CharField(max_length=100)
-    current_ctc = models.PositiveIntegerField()
-    expected_ctc = models.PositiveIntegerField()
-    notice_period = models.PositiveIntegerField()
+    current_ctc = models.PositiveIntegerField(blank=True)
+    expected_ctc = models.PositiveIntegerField(blank=True)
+    notice_period = models.PositiveIntegerField(blank=True)
     total_exp_yrs = models.PositiveIntegerField()
     total_exp_mts = models.PositiveIntegerField()
     highest_qual = models.CharField(max_length=100)
     college_highest_qual = models.CharField(max_length=100)
-    current_location = models.CharField(max_length=100)
+    current_location = models.CharField(max_length=100,blank=True)
     cv = models.FileField(upload_to=get_upload_file_name)
 
     def __str__ (self):

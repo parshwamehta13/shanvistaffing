@@ -37,7 +37,22 @@ def jobpage (request,job_id):
 		login_var=False
 	job = JobOpening.objects.get(pk=job_id)
 	title = job.position+" - "+job.company_name
-	return render (request,'recruitment/jobpage.html',{'title':'Shanvi Staffing | '+title,'job':job,'login':login_var,'username':request.user.username,'job_id':job_id})
+	temp1 = JobApplication.objects.filter(position=job)
+	if login_var:
+		temp2 = JobApplication.objects.filter(candidate=request.user)
+		temp = temp1&temp2
+		print temp
+		print len(temp)
+		if len(temp) != 0:
+			apply_var=False
+		else:
+			apply_var=True
+	else:
+		apply_var=True
+	print "apply_var = "+str(apply_var)
+	# apply_var = True => Can Apply 
+	# apply_var = False => Cannot Apply
+	return render (request,'recruitment/jobpage.html',{'title':'Shanvi Staffing | '+title,'job':job,'login':login_var,'username':request.user.username,'job_id':job_id,'apply':apply_var})
 
 def login_view (request):
 	if request.method=='POST':
@@ -54,67 +69,85 @@ def login_view (request):
 		        print("The password is valid, but the account has been disabled!")
 		else:
 		    print("The username and password were incorrect.")
-		    # Add Message Here
+		    error = '*The Username and/or Password is wrong'
+		return render (request,'recruitment/login.html',{'title':'Shanvi Staffing | User Login','error':error})
 	return render (request,'recruitment/login.html',{'title':'Shanvi Staffing | User Login'})
 
-def update_information(request):	
-	candidate = Candidate.objects.get(user=request.user)
-	user = request.user
-	if request.method == 'POST':
-		name=request.POST['full_name']
-		email=request.POST['email']
-		phone_number=request.POST['mobile_no']
-		current_designation=request.POST['current_designation']
-		current_employer=request.POST['current_employer']
-		current_ctc=request.POST['current_salary']
-		expected_ctc=request.POST['expected_salary']
-		notice_period=request.POST['notice_period']
-		total_exp_yrs=request.POST['total_exp_yrs']
-		total_exp_mts=request.POST['total_exp_mts']
-		highest_qual=request.POST['highest_qual']
-		college_highest_qual=request.POST['college_highest_qual']
-		current_location=request.POST['current_location']
-		if 'cv' in request.FILES and request.FILES['cv']:
-			cv=request.FILES['cv']
-		password = request.POST['password']
-		if  authenticate(username=request.user.username,password=password):
-			print "Update Profile"
-			candidate.name = name
-			candidate.email =email
-			candidate.phone_number = phone_number
-			candidate.current_designation= current_designation
-			candidate.current_employer=current_employer
-			candidate.expected_ctc = expected_ctc
-			candidate.notice_period=notice_period
-			candidate.total_exp_yrs=total_exp_yrs
-			candidate.total_exp_mts=total_exp_mts
-			candidate.highest_qual=highest_qual
-			candidate.college_highest_qual=college_highest_qual
-			candidate.current_location=current_location
-			if 'cv' in request.FILES and request.FILES['cv']:
-				candidate.cv=request.FILES['cv']
-			#candidate.cv = cv
-			candidate.save()
-			messages.success(request, 'Profile Details Updated Successfully')
-			return redirect('index')
-		else:
-			print "Password didn't match"
+def update_information(request):
 	if request.user.is_authenticated():
-		login_var=True
+		login_var=True	
+		candidate = Candidate.objects.get(user=request.user)
+		user = request.user
+		if request.method == 'POST':
+			name=request.POST['full_name']
+			email=request.POST['email']
+			phone_number=request.POST['mobile_no']
+			current_designation=request.POST['current_designation']
+			current_employer=request.POST['current_employer']
+			current_ctc=request.POST['current_salary']
+			expected_ctc=request.POST['expected_salary']
+			notice_period=request.POST['notice_period']
+			total_exp_yrs=request.POST['total_exp_yrs']
+			total_exp_mts=request.POST['total_exp_mts']
+			highest_qual=request.POST['highest_qual']
+			college_highest_qual=request.POST['college_highest_qual']
+			current_location=request.POST['current_location']
+			if 'cv' in request.FILES and request.FILES['cv']:
+				cv=request.FILES['cv']
+			password = request.POST['password']
+			if  authenticate(username=request.user.username,password=password):
+				print "Update Profile"
+				candidate.name = name
+				candidate.email =email
+				candidate.phone_number = phone_number
+				candidate.current_designation= current_designation
+				candidate.current_employer=current_employer
+				candidate.expected_ctc = expected_ctc
+				candidate.notice_period=notice_period
+				candidate.total_exp_yrs=total_exp_yrs
+				candidate.total_exp_mts=total_exp_mts
+				candidate.highest_qual=highest_qual
+				candidate.college_highest_qual=college_highest_qual
+				candidate.current_location=current_location
+				if 'cv' in request.FILES and request.FILES['cv']:
+					candidate.cv=request.FILES['cv']
+				candidate.save()
+				messages.success(request, 'Profile Details Updated Successfully')
+				return redirect('index')
+			else:
+				return render (request,'recruitment/update_information.html',{'title':'Shanvi Staffing | Update Personal Details','login':login_var,'username':request.user.username,'candidate':candidate,'error':"Password didn't match !"})		
+		else:
+			return render (request,'recruitment/update_information.html',{'title':'Shanvi Staffing | Update Personal Details','login':login_var,'username':request.user.username,'candidate':candidate})		
 	else:
 		login_var=False
-	return render (request,'recruitment/update_information.html',{'title':'Shanvi Staffing | Update Personal Details','login':login_var,'username':request.user.username,'candidate':candidate})
+		return redirect ('index')
+	
 
 def signup (request):
 	if request.method == 'POST':
 		name=request.POST['full_name']
 		email=request.POST['email']
 		phone_number=request.POST['mobile_no']
-		current_designation=request.POST['current_designation']
-		current_employer=request.POST['current_employer']
-		current_ctc=request.POST['current_salary']
-		expected_ctc=request.POST['expected_salary']
-		notice_period=request.POST['notice_period']
+		if "current_designation" in request.POST and request.POST['current_designation']:
+			current_designation=request.POST['current_designation']
+		else:
+			current_designation = 'None'
+		if "current_employer" in request.POST and request.POST['current_employer']:
+			current_employer = request.POST['current_employer']
+		else:
+			current_employer = 'None'
+		if "current_salary" in request.POST and request.POST['current_salary']:
+			current_ctc = request.POST['current_salary']
+		else:
+			current_ctc = 0
+		if "expected_salary" in request.POST and request.POST['expected_salary']:
+			expected_ctc = request.POST['expected_salary']
+		else:
+			expected_ctc = 0
+		if "notice_period" in request.POST and request.POST['notice_period']:
+			notice_period=request.POST['notice_period']
+		else:
+			notice_period = 0
 		total_exp_yrs=request.POST['total_exp_yrs']
 		total_exp_mts=request.POST['total_exp_mts']
 		highest_qual=request.POST['highest_qual']
@@ -126,8 +159,8 @@ def signup (request):
 		user = User.objects.create_user(username=username,password=password)
 		candidate = Candidate(user=user,name=name,email=email,phone_number=phone_number,current_designation=current_designation,current_location=current_location,current_ctc=current_ctc,current_employer=current_employer,expected_ctc=expected_ctc,notice_period=notice_period,total_exp_yrs=total_exp_yrs,total_exp_mts=total_exp_mts,highest_qual=highest_qual,college_highest_qual=college_highest_qual,cv=cv)
 		candidate.save()
-		messages.success(request, 'Your Account Has Been Created !')
-		login(request,user)
+		messages.success(request, 'Your Account Has Been Created! Please login')
+		#login(request,user)
 		return redirect('index')
 
 def requirement (request):
@@ -149,7 +182,7 @@ def apply_job (request,job_id):
 	position = JobOpening.objects.get(pk=job_id)
 	status = 'Pending'
 	
-	application = JobApplication(candidate=candidate,position=position,status=status)
+	application = JobApplication(candidate=candidate,position=position,status=status,comment="No Comments Yet")
 	print application
 	application.save()
 	messages.success(request, 'Applied Successfully! To view your application => Application Tracking System on the top right corner menu')
@@ -190,6 +223,6 @@ def app_tracking_sys (request):
 
 def logout_view (request):
 	logout(request)
-	# Add Logout Message Here
 	messages.success(request, 'Logged Out Successfully')
 	return redirect('index')
+

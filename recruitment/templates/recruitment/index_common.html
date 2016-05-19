@@ -49,11 +49,11 @@
     </nav>
   </div>
   {% if messages %}
-  <div class="container success-message-container">
+  <!-- <div class="container success-message-container" style="width:80%"> -->
     {% for message in messages %}
-    <p class="light success-message rounded">{{message}}</p>
+      <p class="light success-message rounded">{{message}}</p>
     {% endfor %}
-  </div>
+  <!-- </div> -->
   {% endif %}
     <div class="section no-pad-bot search-block">
       <div class="container">
@@ -120,7 +120,8 @@
     <div class="modal-content">
       <h5 class="header center">Register Yourself !</h5>
       <div>
-          <p class="light center"><strong>*Already Registered ? </strong><a href="{% url 'login' %}"><b> Login</b></a></p>
+          <p class="light center"><strong>Already Registered ? </strong><a href="{% url 'login' %}"><b> Login</b></a></p>
+          <p class="light center">*Indicates that the field is necessary</p>
       </div>
       <div class="row">
 
@@ -128,17 +129,17 @@
         {% csrf_token %}
           <div class="row">
             <div class="input-field col l12 m12 s12">
-              <input id="name" name="full_name" type="text" class="validate">
-              <label for="name">Full Name</label>
+              <input id="name" name="full_name" type="text" class="validate" required>
+              <label for="name">Full Name*</label>
             </div>
             <div class="input-field col l6 m12 s12">
-              <input id="email" name="email" type="email" class="validate">
-              <label for="email">Email Id</label>
+              <input id="email" name="email" type="email" class="validate" required>
+              <label for="email">Email Id*</label>
             </div>
           
             <div class="input-field col l6 m12 s12">
-              <input id="mobile_no" name="mobile_no" type="text" class="validate">
-              <label for="mobile_no">Mobile No.</label>
+              <input id="mobile_no" name="mobile_no" type="text" class="validate" required>
+              <label for="mobile_no">Mobile No.*</label>
             </div>
             
             <div class="input-field col l6 m12 s12">
@@ -167,18 +168,18 @@
             </div>
 
             <div class="input-field col l4 m12 s12">
-              <input id="total_exp_yrs" name="total_exp_yrs" type="number" class="validate">
-              <label for="total_exp_yrs">Experience (in years)</label>
+              <input id="total_exp_yrs" name="total_exp_yrs" type="number" class="validate" min="0" required>
+              <label for="total_exp_yrs">Experience (in years)*</label>
             </div>
 
             <div class="input-field col l4 m12 s12">
-              <input id="total_exp_mts" name="total_exp_mts" type="number" class="validate">
-              <label for="total_exp_mts">Experience (in months)</label>
+              <input id="total_exp_mts" name="total_exp_mts" type="number" class="validate" min="0" max="11" required>
+              <label for="total_exp_mts">Experience (in months)*</label>
             </div>
 
             <div class="input-field col l6 m12 s12">
-              <input id="highest_qual" name="highest_qual" type="text" class="validate">
-              <label for="highest_qual">Highest Qualification</label>
+              <input id="highest_qual" name="highest_qual" type="text" class="validate" required>
+              <label for="highest_qual">Highest Qualification*</label>
             </div>
 
             <div class="input-field col l6 m12 s12">
@@ -187,14 +188,14 @@
             </div>
 
             <div class="input-field col l12 m12 s12">
-              <input id="college_highest_qual" name="college_highest_qual" type="text" class="validate">
-              <label for="college_highest_qual">College Attended (For the Highest Qualification)</label>
+              <input id="college_highest_qual" name="college_highest_qual" type="text" class="validate" required>
+              <label for="college_highest_qual">College Attended (For the Highest Qualification)*</label>
             </div>
 
             <div class="file-field input-field col s12">
               <div class="btn">
-                <span>Upload CV (.pdf only)</span>
-                <input type="file" name='cv' accept=".pdf">
+                <span>Upload CV (.pdf only)*</span>
+                <input type="file" name='cv' accept=".pdf" required>
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">
@@ -202,13 +203,13 @@
             </div>
 
             <div class="input-field col s12">
-              <input id="username" name="username" type="text" class="validate">
-              <label for="username">Username</label>
+              <input id="username" name="username" type="text" class="validate" required>
+              <label for="username">Username*</label>
             </div>
 
             <div class="input-field col s12">
-              <input id="password"  name="password" type="password" class="validate">
-              <label for="password">Password</label>
+              <input id="password"  name="password" type="password" class="validate" required>
+              <label for="password">Set Password*</label>
             </div>
             
             <div class="center">
@@ -219,7 +220,7 @@
           </div>
         </form>
         <div class="modal-footer">
-          <p class="light center"><strong>*Already Registered ? </strong><a href="{% url 'login' %}"><b> Login</b></a></p>
+          <p class="light center"><strong>Already Registered ? </strong><a href="{% url 'login' %}"><b> Login</b></a></p>
         </div>
       </div>
     </div>
@@ -296,7 +297,7 @@
       setTimeout(myFunction, 3000);
     });
     function myFunction() {
-      $(".success-message-container").hide(1000);
+      $(".success-message").hide(1000);
     }
   </script>
 

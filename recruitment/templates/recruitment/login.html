@@ -4,6 +4,9 @@
 
 <div class="section rounded padded shadowed white" style="min-height:280px;width:30%;margin:25px auto">
 	<h4 class="header center-align padded margined">User Login</h4>
+    {% if error %}
+      <p class="light error-message rounded" style="font-size:16px;margin-bottom:30px">{{error}}</p>
+    {% endif %}
 	<form method="POST" action="">
     {% csrf_token %}
 		<div class="input-field col s12">
