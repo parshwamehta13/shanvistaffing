@@ -48,7 +48,13 @@
       </div>
     </nav>
   </div>
-
+  {% if messages %}
+  <div class="container success-message-container">
+    {% for message in messages %}
+    <p class="light success-message rounded">{{message}}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
     <div class="section no-pad-bot search-block">
       <div class="container">
         <h4 class="dark header center">Search Your Next Job</h4>
@@ -287,7 +293,11 @@
       $('.modal-trigger').leanModal();
       $('.scrollspy').scrollSpy();
       $(".dropdown-button").dropdown();
+      setTimeout(myFunction, 3000);
     });
+    function myFunction() {
+      $(".success-message-container").hide(1000);
+    }
   </script>
 
   </body>

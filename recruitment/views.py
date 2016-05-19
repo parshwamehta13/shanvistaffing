@@ -8,6 +8,7 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 import datetime
+from django.contrib import messages
 # Create your views here.
 
 def index (request):
@@ -47,7 +48,7 @@ def login_view (request):
 		    if user.is_active:
 		    	login (request,user)
 		        print("User is valid, active and authenticated")
-		        # Add Login Success Message Here
+		        messages.success(request, 'Logged In Successfully')
 		        return redirect('index')
 		    else:
 		        print("The password is valid, but the account has been disabled!")
@@ -94,7 +95,7 @@ def update_information(request):
 				candidate.cv=request.FILES['cv']
 			#candidate.cv = cv
 			candidate.save()
-			# Add Success Message Here
+			messages.success(request, 'Profile Details Updated Successfully')
 			return redirect('index')
 		else:
 			print "Password didn't match"
@@ -125,7 +126,7 @@ def signup (request):
 		user = User.objects.create_user(username=username,password=password)
 		candidate = Candidate(user=user,name=name,email=email,phone_number=phone_number,current_designation=current_designation,current_location=current_location,current_ctc=current_ctc,current_employer=current_employer,expected_ctc=expected_ctc,notice_period=notice_period,total_exp_yrs=total_exp_yrs,total_exp_mts=total_exp_mts,highest_qual=highest_qual,college_highest_qual=college_highest_qual,cv=cv)
 		candidate.save()
-		# Add Success Message Over Here
+		messages.success(request, 'Your Account Has Been Created !')
 		login(request,user)
 		return redirect('index')
 
@@ -140,7 +141,7 @@ def requirement (request):
 		further_info=request.FILES['further_info']
 		req = Requirement(full_name=full_name,email=email,company_name=company_name,location=location,cont_no=cont_no,job_description=job_description,further_info=further_info)
 		req.save()
-		# Add Success Message Here
+		messages.success(request, 'Your Requirements Have Been Duly Noted')
 		return redirect('index')
 
 def apply_job (request,job_id):
@@ -151,7 +152,7 @@ def apply_job (request,job_id):
 	application = JobApplication(candidate=candidate,position=position,status=status)
 	print application
 	application.save()
-	# Add a success message here
+	messages.success(request, 'Applied Successfully! To view your application => Application Tracking System on the top right corner menu')
 	return redirect('joblist')
 
 def change_password (request):
@@ -167,7 +168,7 @@ def change_password (request):
 				user.set_password(request.POST['new_password'])
 				user.save()
 				#login(request,user)
-				print "Password has been changed, please login again"
+				messages.success(request,"Password has been changed successfully, please login again")
 			else:
 				print "New Passwords Do Not Match"
 				# Add failure message here
@@ -190,4 +191,5 @@ def app_tracking_sys (request):
 def logout_view (request):
 	logout(request)
 	# Add Logout Message Here
-	return redirect(index)
+	messages.success(request, 'Logged Out Successfully')
+	return redirect('index')
