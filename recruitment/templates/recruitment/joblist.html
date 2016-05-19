@@ -14,7 +14,11 @@
 			<div class="col s9">
 				<div class="section list-section">
 					<h4 class=" header center-align">Job Openings</h4>
+					{% if no_job_error %}
+					<p class="red-background center rounded shadowed">No Jobs Available For This Query, <a class="btn red waves-effect waves-light rounded" href="{% url 'joblist' %}">Click Here</a> for viewing all the Job Openings</p>
+					{% else %}
 					<table class="highlight bordered">
+
 						<thead style="font-size: 20px">
 							<tr>
 								<th style="text-align: center">Position</th>
@@ -32,6 +36,7 @@
 							{% endfor %}
 						</tbody>
 					</table>
+					{% endif %}
 				</div>
 			</div>
 		</div>

@@ -28,7 +28,12 @@ def joblist (request):
 		job_list = JobOpening.objects.filter(location__icontains=request.GET['location']) & JobOpening.objects.filter(position__icontains=request.GET['role'])
 	else:
 		job_list = JobOpening.objects.all()
-	return render (request,'recruitment/joblist.html',{'title':'Shanvi Staffing | List Of Job Openings','job_list':job_list,'login':login_var,'username':request.user.username})
+	if len(job_list)==0:
+		no_job_error = True
+	else:
+		no_job_error = False
+	print "no_job_error "+str(no_job_error)
+	return render (request,'recruitment/joblist.html',{'title':'Shanvi Staffing | List Of Job Openings','job_list':job_list,'login':login_var,'username':request.user.username,'no_job_error':no_job_error})
 
 def jobpage (request,job_id):
 	if request.user.is_authenticated():
@@ -219,11 +224,16 @@ def app_tracking_sys (request):
 	user = request.user
 	if request.user.is_authenticated():
 		login_var=True
+		applications = JobApplication.objects.filter(candidate=user)
+		if len(applications)==0:
+			no_application_error = True
+		else:
+			no_application_error = False
+		return render(request,'recruitment/application_tracking.html',{'title':'Shanvi Staffing | Application Tracking System','login':login_var,'username':request.user.username,'applications':applications,'no_application_error':no_application_error})
 	else:
 		login_var=False
-	applications = JobApplication.objects.filter(candidate=user)
-	return render(request,'recruitment/application_tracking.html',{'title':'Shanvi Staffing | Application Tracking System','login':login_var,'username':request.user.username,'applications':applications})
-
+		return redirect('index')
+	
 def logout_view (request):
 	logout(request)
 	messages.success(request, 'Logged Out Successfully')
