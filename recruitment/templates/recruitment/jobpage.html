@@ -1,0 +1,42 @@
+{% extends 'recruitment/index_common.html' %}
+{% block content %}
+<div class="container">
+	<div class="section white margined rounded shadowed jobpage-header">
+		<h6 class="header jobpage-heading padded">Position and Company</h4>
+		<div class="divider"></div>
+		<h5 class="header company-position-header padded">{{job.position}} - <b>{{job.company_name}}</b></h3>
+	</div>
+	<div class="section white margined rounded shadowed jobpage-role">
+		<h6 class="header jobpage-heading padded">Role</h6>
+		<div class="divider"></div>
+		<p class="light padded">{{job.job_description}}</p>
+	</div>
+	<div class="section white margined rounded shadowed jobpage-req">
+		<h6 class="header jobpage-heading padded">Minimum Requirements</h6>
+		<div class="divider"></div>
+		<p class="light padded">{{job.min_requirement}}</p>
+	</div>
+	<div class="section white margined rounded shadowed jobpage-abt-company">
+		<h6 class="header jobpage-heading padded">Salary (in Lacs)</h6>
+		<div class="divider"></div>
+		<p class="light padded"><strong>{{job.min_salary}} - {{job.max_salary}}</strong></p>
+	</div>
+	<div class="section white margined rounded shadowed jobpage-abt-company">
+		<h6 class="header jobpage-heading padded">About the company</h6>
+		<div class="divider"></div>
+		<p class="light padded">{{job.about_company}}</p>
+	</div>
+	
+	{% if login %}
+	<div class="center" style="margin-bottom: 25px">
+		<a class="waves-effect waves-light btn btn-large grey darken-4 rounded modal-trigger" href="{% url 'apply_job' job_id %}">Apply Now !</a>
+	</div>
+	{% else %}
+	<div class="center" style="margin-bottom: 25px">
+		<a class="waves-effect waves-light btn btn-large grey darken-4 rounded modal-trigger" href="#modalsignup">Apply Now !</a>
+	</div>
+	{% endif %}
+
+</div>
+
+{% endblock %}

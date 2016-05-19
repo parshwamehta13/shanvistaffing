@@ -1,0 +1,103 @@
+{% extends 'recruitment/index_common.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="section rounded padded shadowed white" style="min-height:280px;width:70%;margin:25px auto">
+	<h4 class="header center-align padded">Update Personal Information</h4>
+	<div class="row">
+        <form class="col s12" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+          <div class="row">
+            <div class="input-field col l12 m12 s12">
+              <input id="name" name="full_name" type="text" class="validate" value="{{candidate.name}}">
+              <label for="name">Full Name</label>
+            </div>
+            <div class="input-field col l6 m12 s12">
+              <input id="email" name="email" type="email" class="validate" value="{{candidate.email}}">
+              <label for="email">Email Id</label>
+            </div>
+          
+            <div class="input-field col l6 m12 s12">
+              <input id="mobile_no" name="mobile_no" type="text" class="validate" value="{{candidate.phone_number}}">
+              <label for="mobile_no">Mobile No.</label>
+            </div>
+            
+            <div class="input-field col l6 m12 s12">
+              <input id="current_designation" name="current_designation" type="text" class="validate" value="{{candidate.current_designation}}">
+              <label for="current_designation">Current Designation</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="current_employer" name="current_employer" type="text" class="validate" value="{{candidate.current_employer}}">
+              <label for="current_employer">Current Employer</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="current_salary" name="current_salary" type="number" class="validate" value="{{candidate.current_ctc}}">
+              <label for="current_salary">Current Annual Salary (in Lacs)</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="expected_salary" name="expected_salary" type="number" class="validate" value="{{candidate.expected_ctc}}">
+              <label for="expected_salary">Expected Annual Salary (in Lacs)</label>
+            </div>
+
+            <div class="input-field col l4 m12 s12">
+              <input id="notice_period" name="notice_period" type="number" class="validate" value="{{candidate.notice_period}}">
+              <label for="notice_period">Notice Period (in days)</label>
+            </div>
+
+            <div class="input-field col l4 m12 s12">
+              <input id="total_exp_yrs" name="total_exp_yrs" type="number" class="validate" value="{{candidate.total_exp_yrs}}">
+              <label for="total_exp_yrs">Experience (in years)</label>
+            </div>
+
+            <div class="input-field col l4 m12 s12">
+              <input id="total_exp_mts" name="total_exp_mts" type="number" class="validate" value="{{candidate.total_exp_mts}}">
+              <label for="total_exp_mts">Experience (in months)</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="highest_qual" name="highest_qual" type="text" class="validate" value="{{candidate.highest_qual}}">
+              <label for="highest_qual">Highest Qualification</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="current_location" name="current_location" type="text" class="validate" value="{{candidate.current_location}}">
+              <label for="current_location">Current Location</label>
+            </div>
+
+            <div class="input-field col l12 m12 s12">
+              <input id="college_highest_qual" name="college_highest_qual" type="text" class="validate" value="{{candidate.college_highest_qual}}">
+              <label for="college_highest_qual">College Attended (For the Highest Qualification)</label>
+            </div>
+
+            <div class="col l3 m12 s12 center" style="margin-top:10px">
+              <a class="btn-large waves-effect waves-light" href="{{candidate.cv.url}}" target="_blank">View CV</a>
+            </div>
+
+            <div class="file-field input-field col l9 m12 s12">
+              <div class="btn">
+                <span>Update CV (.pdf only)</span>
+                <input type="file" name='cv' accept=".pdf" value="{{candidate.cv}}">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+
+            <div class="input-field col s12">
+              <input id="password"  name="password" type="password" class="validate">
+              <label for="password">Confirm Password</label>
+            </div>
+            
+            <div class="center">
+              <input type="submit" class="btn waves-effect waves-light teal darken-3" value="Update Profile">
+            </div>
+            <br>
+          </div>
+        </form>
+      </div>
+</div>
+
+{% endblock %}

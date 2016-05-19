@@ -1,0 +1,28 @@
+{% extends 'recruitment/index_common.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="section rounded padded shadowed white" style="min-height:280px;width:30%;margin:25px auto">
+	<h4 class="header center-align padded margined">User Login</h4>
+	<form method="POST" action="">
+    {% csrf_token %}
+		<div class="input-field col s12">
+            <input id="username" name='username' type="text" class="validate">
+            <label for="username">Username</label>
+        </div>
+
+         <div class="input-field col s12">
+            <input id="password" name='password' type="password" class="validate">
+            <label for="password">Password</label>
+        </div>
+        <br>
+        <div class="center">
+            <input type="submit" class="btn waves-effect waves-light teal darken-3">
+        </div>
+        <div class="center margined">
+            <strong><a href="#" style="font-size:17px">Forgot Password ?</a></strong>
+        </div>
+	</form>
+</div>
+
+{% endblock %}

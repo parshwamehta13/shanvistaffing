@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>{{ title }}</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+  <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="{% url 'app_tracking_sys' %}">Track Your Applications</a></li>
+    <li><a href="{% url 'update_information' %}">Edit/View Profile</a></li>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    <li><a href="{% url 'change_password' %}">Change Password</a></li>
+  </ul>
+  <div class="navbar-fixed">
+    <nav class="white" role="navigation">
+      <div class="nav-wrapper container-fluid">
+        <a id="logo-container" href="#" class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{% url 'index' %}#about-us">About Us</a></li>
+          <li><a href="{% url 'joblist' %}"><b>Job Seekers!</b></a></li>
+          <li><a href="{% url 'index' %}#clients">Our Clients</a></li>
+          <li><a href="{% url 'index' %}#feedback">Feedbacks</a></li>
+          <li><a class="waves-effect waves-light btn purple modal-trigger" href="#modalpostjob">Post A Requirement</a></li>
+          {% if login %}
+          <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons left">assignment_ind</i><strong class="uppercase">{{username}}</strong><i class="material-icons right">arrow_drop_down</i></a></li>
+          {% else %}
+          <li><a class="waves-effect waves-light btn modal-trigger" href="#modalsignup">Login/Sign Up</a></li>
+          {% endif %}
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a href="{% url 'index' %}#about-us">About Us</a></li>
+          <li><a href="{% url 'joblist' %}"><b>Job Seekers!</b></a></li>
+          <li><a href="{% url 'index' %}#clients">Our Clients</a></li>
+          <li><a href="{% url 'index' %}#feedback">Feedbacks</a></li>
+          <li><a class="waves-effect waves-light btn purple modal-trigger" href="#modalpostjob">Post A Requirement</a></li>
+          <li><a class="waves-effect waves-light btn modal-trigger" href="#modalsignup">Login/Sign Up</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+  </div>
+
+    <div class="section no-pad-bot search-block">
+      <div class="container">
+        <h4 class="dark header center">Search Your Next Job</h4>
+        <div class="row">
+          <form class="col s12 l12" method="GET" action="{% url 'joblist' %}">
+            <div class="row">
+              <div class="input-field col s12 l3 m6">
+                <i class="search_icon large material-icons prefix">room</i>
+                <input id="icon_prefix" name="location" type="text" class="validate">
+                <label for="icon_prefix">Location</label>
+              </div>
+              <div class="input-field col s12 l3 m6">
+                <i class="search_icon large material-icons prefix">perm_identity</i>
+                <input id="icon_telephone" name="role" type="text" class="validate">
+                <label for="icon_telephone">Role</label>
+              </div>
+              <div class="input-field col s12 l3 m6">
+                <button class="btn-large waves-effect waves-light yellow_btn" type="submit" name="action"><i class="material-icons right">search</i>Find Jobs
+                </button>
+              </div>
+              <div class="input-field col s12 l3 m6">
+                <a class="btn-large waves-effect waves-light yellow_btn" href="{% url 'joblist' %}">Show All Jobs
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <br>
+      </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12 ">
+          <h5 class="white-text"> About</h5>
+          <p class="grey-text text-lighten-4 ">Shanvi Staffing is a leading human resource consultancy specialising in the recruitment of permanent, contract and temporary positions with over 20 years of experience.</p>
+
+
+        </div>
+        <div class="col l6 s12">
+          <h5 class="white-text">Contact Us</h5>
+          <p class="white-text text-lighten-4">
+            J8/3 DLF Phase 2,
+            Near Sikanderpur Metro Station,
+            Gurgaon, Haryana,
+            India.<br>
+            +91-124-4008-828
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      © Copyright 2012. Shanvi Staffing And Training Services
+      </div>
+    </div>
+  </footer>
+  <div id="modalsignup" class="modal">
+    <div class="modal-content">
+      <h5 class="header center">Register Yourself !</h5>
+      <div>
+          <p class="light center"><strong>*Already Registered ? </strong><a href="{% url 'login' %}"><b> Login</b></a></p>
+      </div>
+      <div class="row">
+
+        <form class="col s12" action="{% url 'signup' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+          <div class="row">
+            <div class="input-field col l12 m12 s12">
+              <input id="name" name="full_name" type="text" class="validate">
+              <label for="name">Full Name</label>
+            </div>
+            <div class="input-field col l6 m12 s12">
+              <input id="email" name="email" type="email" class="validate">
+              <label for="email">Email Id</label>
+            </div>
+          
+            <div class="input-field col l6 m12 s12">
+              <input id="mobile_no" name="mobile_no" type="text" class="validate">
+              <label for="mobile_no">Mobile No.</label>
+            </div>
+            
+            <div class="input-field col l6 m12 s12">
+              <input id="current_designation" name="current_designation" type="text" class="validate">
+              <label for="current_designation">Current Designation</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="current_employer" name="current_employer" type="text" class="validate">
+              <label for="current_employer">Current Employer</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="current_salary" name="current_salary" type="number" class="validate">
+              <label for="current_salary">Current Annual Salary (in Lacs)</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="expected_salary" name="expected_salary" type="number" class="validate">
+              <label for="expected_salary">Expected Annual Salary (in Lacs)</label>
+            </div>
+
+            <div class="input-field col l4 m12 s12">
+              <input id="notice_period" name="notice_period" type="number" class="validate">
+              <label for="notice_period">Notice Period (in days)</label>
+            </div>
+
+            <div class="input-field col l4 m12 s12">
+              <input id="total_exp_yrs" name="total_exp_yrs" type="number" class="validate">
+              <label for="total_exp_yrs">Experience (in years)</label>
+            </div>
+
+            <div class="input-field col l4 m12 s12">
+              <input id="total_exp_mts" name="total_exp_mts" type="number" class="validate">
+              <label for="total_exp_mts">Experience (in months)</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="highest_qual" name="highest_qual" type="text" class="validate">
+              <label for="highest_qual">Highest Qualification</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="current_location" name="current_location" type="text" class="validate">
+              <label for="current_location">Current Location</label>
+            </div>
+
+            <div class="input-field col l12 m12 s12">
+              <input id="college_highest_qual" name="college_highest_qual" type="text" class="validate">
+              <label for="college_highest_qual">College Attended (For the Highest Qualification)</label>
+            </div>
+
+            <div class="file-field input-field col s12">
+              <div class="btn">
+                <span>Upload CV (.pdf only)</span>
+                <input type="file" name='cv' accept=".pdf">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+
+            <div class="input-field col s12">
+              <input id="username" name="username" type="text" class="validate">
+              <label for="username">Username</label>
+            </div>
+
+            <div class="input-field col s12">
+              <input id="password"  name="password" type="password" class="validate">
+              <label for="password">Password</label>
+            </div>
+            
+            <div class="center">
+              <input type="submit" class="btn waves-effect waves-light teal darken-3">
+            </div>
+            <br>
+            <div class="divider"></div>
+          </div>
+        </form>
+        <div class="modal-footer">
+          <p class="light center"><strong>*Already Registered ? </strong><a href="{% url 'login' %}"><b> Login</b></a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div id="modalpostjob" class="modal">
+    <div class="modal-content">
+      <h5 class="header center">Please Fill This Form</h5>
+      <h6 class="center">We shall contact you soon </h6>
+      <div class="row">
+        <form class="col s12" enctype="multipart/form-data" method='POST' action="{% url 'requirement' %}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="name" type="text" name="full_name" class="validate">
+              <label for="name">Full Name</label>
+            </div>
+            <div class="input-field col l12 m12 s12">
+              <input id="email" name="email_id" type="email" class="validate">
+              <label for="email">Email Id</label>
+            </div>
+          
+            <div class="input-field col l12 m12 s12">
+              <input id="company_name" name="company_name" type="text" class="validate">
+              <label for="company_name">Company Name</label>
+            </div>
+            
+            <div class="input-field col l6 m12 s12">
+              <input id="location" name="location" type="text" class="validate">
+              <label for="location">Your Location</label>
+            </div>
+
+            <div class="input-field col l6 m12 s12">
+              <input id="cont_no" name="cont_no" type="text" class="validate">
+              <label for="cont_no">Contact No</label>
+            </div>
+
+            <div class="input-field col l12 m12 s12">
+              <textarea id="job_description" name="job_description" class="materialize-textarea"></textarea>
+              <label for="job_description">Job Description</label>
+            </div>
+
+            <div class="file-field input-field col s12">
+              <div class="btn">
+                <span>Futher Info</span>
+                <input type="file" name='further_info'>
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+            <br>
+            <div class="center">
+              <input type="submit" class="btn waves-effect waves-light teal darken-3">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'js/materialize.js' %}"></script>
+  <script src="{% static 'js/init.js' %}"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.modal-trigger').leanModal();
+      $('.scrollspy').scrollSpy();
+      $(".dropdown-button").dropdown();
+    });
+  </script>
+
+  </body>
+</html>

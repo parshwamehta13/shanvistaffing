@@ -1,0 +1,164 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+body{
+  background-color: #E3E3E3;
+  background-image: url('https://www.gulftalent.com/assets/img/site_background.gif?v2_25_3');
+}
+
+table{
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+td{
+  padding-left: 15px
+}
+
+.uppercase{
+  text-transform: uppercase;
+}
+
+.client-section{
+  background-color: #fff
+}
+
+.rounded{
+  border-radius: 8px;
+}
+
+.shadowed{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.filter{
+  margin-top: 35px;
+}
+
+.padded {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.margined {
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+
+.jobpage-heading{
+  font-size: 19px;
+  font-weight: bold;
+  color: #0077b5;
+}
+
+.filter-section{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 8px;
+}
+
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+.header{
+  font-family: 'Raleway', sans-serif;
+}
+
+#icon_prefix, #icon_telephone{
+  color: white;
+}
+
+.light {
+  font-size: 18px;
+}
+
+.about-us{
+  background-color: #EEE;
+}
+
+.feedback {
+  background: #EEE; /* For browsers that do not support gradients */
+}
+
+.dark{
+  color: white;
+}
+
+.container-fluid{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.yellow_btn{
+  background-color: #fbc02d;
+  color: black;
+}
+
+.search-block{
+  background-color: #151721;
+  background-image: url("https://stamplay.com/images/exagon-pattern.png");
+}
+
+p {
+  line-height: 2rem;
+}
+
+.search_icon {
+  color: #eeeeee;
+}
+
+.button-collapse {
+  color: #26a69a;
+}
+
+.parallax-container {
+  line-height: 0;
+  min-height: 200px;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+  background-color: white;
+  padding: 10px 20px 20px 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.icon-block:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}

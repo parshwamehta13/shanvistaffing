@@ -1,0 +1,41 @@
+{% extends 'recruitment/index_common.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col s3 filter">
+			<h5 class="header center-align">Filter Results</h5>
+			<div class="section filter-section" style="min-height: 280px;background-color: white">
+				
+			</div>
+		</div>
+			<div class="col s9">
+				<div class="section list-section">
+					<h4 class=" header center-align">Job Openings</h4>
+					<table class="highlight bordered">
+						<thead style="font-size: 20px">
+							<tr>
+								<th style="text-align: center">Position</th>
+								<th>Location</th>
+								<th>Posting Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for job in job_list %}
+								<tr>
+								<td><a href="{% url 'jobpage' job_id=job.id %}"><b>{{job.company_name}}</b> - {{job.position}}</a></td>
+								<td>{{job.location}}</td>
+								<td>{{job.posting_date}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
