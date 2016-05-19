@@ -192,25 +192,28 @@ def change_password (request):
 	user = request.user
 	if request.user.is_authenticated():
 		login_var=True
+		if request.method == 'POST':
+			old_password = request.POST['old_password']
+			if authenticate(username=user,password=old_password):
+				if request.POST['new_password']==request.POST['confirm_password']:
+					user.set_password(request.POST['new_password'])
+					user.save()
+					#login(request,user)
+					messages.success(request,"Password has been changed successfully, please login again")
+				else:
+					error = "New Passwords Do Not Match"
+					# Add failure message here
+					return render (request,'recruitment/change_password.html',{'title':'Shanvi Staffing | Change Password','login':login_var,'username':request.user.username,'error':error})
+			else:
+				error = "Old password entered is wrong"
+				# Add failure message here
+				return render (request,'recruitment/change_password.html',{'title':'Shanvi Staffing | Change Password','login':login_var,'username':request.user.username,'error':error})
+			return redirect('index')
+		else:
+			return render (request,'recruitment/change_password.html',{'title':'Shanvi Staffing | Change Password','login':login_var,'username':request.user.username})
 	else:
 		login_var=False
-	if request.method == 'POST':
-		old_password = request.POST['old_password']
-		if authenticate(username=user,password=old_password):
-			if request.POST['new_password']==request.POST['confirm_password']:
-				user.set_password(request.POST['new_password'])
-				user.save()
-				#login(request,user)
-				messages.success(request,"Password has been changed successfully, please login again")
-			else:
-				print "New Passwords Do Not Match"
-				# Add failure message here
-		else:
-			print "Old password entered is wrong"
-			# Add failure message here
 		return redirect('index')
-	else:
-		return render (request,'recruitment/change_password.html',{'title':'Shanvi Staffing | Change Password','login':login_var,'username':request.user.username})
 
 def app_tracking_sys (request):
 	user = request.user
