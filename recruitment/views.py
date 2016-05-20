@@ -24,16 +24,28 @@ def joblist (request):
 	else:
 		login_var=False
 	if 'location' in request.GET and 'role' in request.GET:
-		print 'Location '+request.GET['location']+' Searched'
+		#print 'Location '+request.GET['location']+' Searched'
 		job_list = JobOpening.objects.filter(location__icontains=request.GET['location']) & JobOpening.objects.filter(position__icontains=request.GET['role'])
+	elif 'location-filter' in request.GET and 'position-filter' in request.GET:
+		#print "Hello"
+		job_list = JobOpening.objects.filter(location__icontains=request.GET['location-filter']) & JobOpening.objects.filter(position__icontains=request.GET['position-filter'])
 	else:
+		#print "Im here"
 		job_list = JobOpening.objects.all()
+	#print request.GET
+	x = JobOpening.objects.all().values('location')
+	locations = [o['location'] for o in x]
+	locations = list(set(locations))
+	y = JobOpening.objects.all().values('position')
+	positions = [o['position'] for o in y]
+	positions = list(set(positions))
+
 	if len(job_list)==0:
 		no_job_error = True
 	else:
 		no_job_error = False
-	print "no_job_error "+str(no_job_error)
-	return render (request,'recruitment/joblist.html',{'title':'Shanvi Staffing | List Of Job Openings','job_list':job_list,'login':login_var,'username':request.user.username,'no_job_error':no_job_error})
+	#print "no_job_error "+str(no_job_error)
+	return render (request,'recruitment/joblist.html',{'title':'Shanvi Staffing | List Of Job Openings','job_list':job_list,'login':login_var,'username':request.user.username,'no_job_error':no_job_error,'locations':locations,'positions':positions})
 
 def jobpage (request,job_id):
 	if request.user.is_authenticated():

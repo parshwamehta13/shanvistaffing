@@ -7,8 +7,31 @@
 	<div class="row">
 		<div class="col s3 filter">
 			<h5 class="header center-align">Filter Results</h5>
-			<div class="section filter-section" style="min-height: 280px;background-color: white">
-				
+			<div class="section filter-section" style="min-height: 300px;background-color: white">
+				<form method="GET" action="">
+					<p class="light" style="padding-left:11.25px;margin-top:0;margin-bottom:0"><strong><u>By Location</u></strong></p>
+					<div class="input-field col s12" style="margin-top:0">
+					    <select style="margin-top:20px" name="location-filter">
+					      <option value="" selected>Choose your location</option>
+					      {% for location in locations %}
+					      <option value="{{location}}">{{location}}</option>
+					      {% endfor %}
+					    </select>
+					</div>
+					<p class="light" style="padding-left:11.25px;margin-top:0;margin-bottom:0"><strong><u>By Position</u></strong></p>
+					<div class="input-field col s12">
+					    <select style="margin-top:20px" name="position-filter">
+					      <option value="" selected style="margin-top:0px">Choose your position</option>
+					      {% for position in positions %}
+					      <option value="{{position}}">{{position}}</option>
+					      {% endfor %}
+					    </select>
+					</div>
+					<div class="input-field col s12 center">
+		                <button class="btn-large waves-effect rounded center waves-light yellow_btn" type="submit" name="action"><i class="material-icons right">search</i>Filter
+		                </button>
+	              	</div>
+				</form>
 			</div>
 		</div>
 			<div class="col s9">
