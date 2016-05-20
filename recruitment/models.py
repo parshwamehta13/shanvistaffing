@@ -22,6 +22,9 @@ class JobOpening (models.Model):
     def __str__ (self):
         return self.position+" "+self.company_name
 
+    class Meta:
+        ordering = ['-posting_date']
+
 def get_upload_file_name(instance, filename):
     return "uploaded_files/%s_%s" % (str(time()).replace('.','_'), filename)
 
@@ -55,6 +58,9 @@ class JobApplication(models.Model):
 
     def __str__ (self):
         return self.candidate.username + " - " + self.position.position + " - " + self.position.company_name
+
+    class Meta:
+        ordering = ['-application_date']
 
 class Requirement (models.Model):
     full_name = models.CharField(max_length=100)

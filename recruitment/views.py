@@ -173,7 +173,7 @@ def signup (request):
 		cv=request.FILES['cv']
 		username=request.POST['username']
 		password=request.POST['password']
-		user = User.objects.create_user(username=username,password=password)
+		user = User.objects.create_user(username=username,password=passwordm,email=email)
 		candidate = Candidate(user=user,name=name,email=email,phone_number=phone_number,current_designation=current_designation,current_location=current_location,current_ctc=current_ctc,current_employer=current_employer,expected_ctc=expected_ctc,notice_period=notice_period,total_exp_yrs=total_exp_yrs,total_exp_mts=total_exp_mts,highest_qual=highest_qual,college_highest_qual=college_highest_qual,cv=cv)
 		candidate.save()
 		messages.success(request, 'Your Account Has Been Created! Please login')
