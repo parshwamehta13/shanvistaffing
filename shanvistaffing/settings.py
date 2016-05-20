@@ -101,6 +101,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Email Support
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'acmeinternationaluganda@gmail.com'
+EMAIL_HOST_PASSWORD = 'har9429601524'
+DEFAULT_FROM_EMAIL = 'parshwamehta13@gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings 
 from recruitment.views import *
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -32,4 +33,8 @@ urlpatterns = [
     url(r'^apply/(?P<job_id>[0-9]+)$',apply_job,name='apply_job'),
     url(r'^changepass/$',change_password,name='change_password'),
     url(r'^applcation_tracking_system/$',app_tracking_sys,name='app_tracking_sys'),
+    url(r'^passreset/$',auth_views.password_reset,name='forgot_password1'),
+    url(r'^passresetdone/$',auth_views.password_reset_done,name='password_reset_done'),
+    url(r'^passresetconfirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',auth_views.password_reset_confirm,name='password_reset_confirm'),
+    url(r'^passresetcomplete/$',auth_views.password_reset_complete,name='password_reset_complete'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
